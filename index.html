@@ -1,1 +1,126 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#10182b">
 
+<title>PRO FOOTBALL MANAGER</title>
+
+<link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-icon">⚽</span>
+        <div>
+            <h2>PRO MANAGER</h2>
+            <small>مدیریت فوتبال حرفه‌ای</small>
+        </div>
+    </div>
+
+    <div class="wallet">
+        🪙 <span>10000</span>
+    </div>
+</header>
+
+<main>
+
+<section class="welcome">
+    <div>
+        <span class="tag">FOOTBALL WORLD</span>
+        <h1>به دنیای فوتبال خوش آمدی</h1>
+        <p>امپراتوری فوتبالی خودت را بساز!</p>
+    </div>
+</section>
+
+<section class="club-card">
+    <div class="club-info">
+        <div class="club-logo">🏆</div>
+        <div>
+            <h2>باشگاه من</h2>
+            <p>هنوز باشگاهی خریداری نکردی</p>
+        </div>
+    </div>
+
+    <button class="primary-btn" onclick="buyClub()">
+        خرید باشگاه
+    </button>
+</section>
+
+<section class="section">
+    <div class="section-title">
+        <h2>مدیریت باشگاه</h2>
+        <span>CLUB MANAGEMENT</span>
+    </div>
+
+    <div class="menu-grid">
+
+        <div class="menu-item" onclick="openPage('team')">
+            <div class="menu-icon">⚽</div>
+            <b>تیم من</b>
+            <small>ترکیب بازیکنان</small>
+        </div>
+
+        <div class="menu-item" onclick="openPage('market')">
+            <div class="menu-icon">🔄</div>
+            <b>نقل و انتقالات</b>
+            <small>خرید و فروش</small>
+        </div>
+
+        <div class="menu-item" onclick="openPage('stadium')">
+            <div class="menu-icon">🏟️</div>
+            <b>ورزشگاه</b>
+            <small>امکانات باشگاه</small>
+        </div>
+
+        <div class="menu-item" onclick="openPage('training')">
+            <div class="menu-icon">🏋️</div>
+            <b>تمرین</b>
+            <small>پیشرفت بازیکنان</small>
+        </div>
+
+        <div class="menu-item" onclick="openPage('league')">
+            <div class="menu-icon">🏆</div>
+            <b>مسابقات</b>
+            <small>لیگ و جام‌ها</small>
+        </div>
+
+        <div class="menu-item" onclick="openPage('clubchat')">
+            <div class="menu-icon">💬</div>
+            <b>چت کلوب</b>
+            <small>ارتباط مدیران</small>
+        </div>
+
+    </div>
+</section>
+
+<section class="section">
+    <div class="section-title">
+        <h2>ستاره‌های فوتبال</h2>
+        <span>PLAYER MARKET</span>
+    </div>
+
+    <div id="players" class="players">
+        <div class="empty-state">
+            بازیکنان به‌زودی وارد بازار می‌شوند ⚽
+        </div>
+    </div>
+</section>
+
+</main>
+
+<nav class="bottom-nav">
+    <button class="active">🏠<span>خانه</span></button>
+    <button onclick="openPage('team')">⚽<span>تیم</span></button>
+    <button onclick="openPage('market')">🔄<span>بازار</span></button>
+    <button onclick="openPage('league')">🏆<span>لیگ</span></button>
+    <button onclick="openPage('profile')">👤<span>مدیر</span></button>
+</nav>
+
+<script src="app.js"></script>
+
+</body>
+</html>
