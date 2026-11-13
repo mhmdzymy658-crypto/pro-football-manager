@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<meta name="theme-color" content="#10182b">
+<title>PRO FOOTBALL MANAGER</title>
+<link rel="stylesheet" href="style.css?v=8">
+</head>
+<body>
+
+<header class="topbar">
+    <div class="brand">
+        <span class="brand-icon">⚽</span>
+        <div>
+            <h2>PRO MANAGER</h2>
+            <small>مدیریت فوتبال حرفه‌ای</small>
+        </div>
+    </div>
+    <div class="wallet">
+        🪙 <span>10000</span>
+    </div>
+</header>
+
+<main id="mainHome">
+
+<section class="welcome">
+    <div>
+        <span class="tag">FOOTBALL WORLD</span>
+        <h1>به دنیای فوتبال خوش آمدی</h1>
+        <p>امپراتوری فوتبالی خودت را بساز!</p>
+    </div>
+</section>
+
+<section class="club-card">
+    <div class="club-info">
+        <div class="club-logo">🏆</div>
+        <div>
+            <h2>باشگاه من</h2>
+            <p>هنوز باشگاهی خریداری نکردی</p>
+        </div>
+    </div>
+    <button class="primary-btn" onclick="buyClub()">
+        خرید باشگاه
+    </button>
+</section>
+
+
+
+
+
+<section class="section">
+    <div class="section-title">
+        <h2>مدیریت باشگاه</h2>
+        <span>CLUB MANAGEMENT</span>
+    </div>
+    <div class="menu-grid">
+        <div class="menu-item" onclick="openPage('team')">
+            <div class="menu-icon">⚽</div>
+            <b>تیم من</b>
+            <small>ترکیب بازیکنان</small>
+        </div>
+        <div class="menu-item" onclick="openPage('market')">
+            <div class="menu-icon">🔄</div>
+            <b>نقل و انتقالات</b>
+            <small>خرید و فروش</small>
+        </div>
+        <div class="menu-item" onclick="openPage('stadium')">
+            <div class="menu-icon">🏟️</div>
+            <b>ورزشگاه</b>
+            <small>امکانات باشگاه</small>
+        </div>
+        <div class="menu-item" onclick="openPage('training')">
+            <div class="menu-icon">🏋️</div>
+            <b>تمرین</b>
+            <small>پیشرفت بازیکنان</small>
+        </div>
+        <div class="menu-item" onclick="openPage('league')">
+            <div class="menu-icon">🏆</div>
+            <b>مسابقات</b>
+            <small>لیگ و جام‌ها</small>
+        </div>
+        <div class="menu-item" onclick="openPage('clubchat')">
+            <div class="menu-icon">💬</div>
+            <b>چت کلوب</b>
+            <small>ارتباط مدیران</small>
+        </div>
+    </div>
+</section>
+
+
+
+</main>
+
+
+<!-- ========== بازار نقل و انتقالات ========== -->
+<div id="marketPage" class="market-page">
+  <header class="market-topbar">
+    <button class="market-back" onclick="closeMarket()" type="button">← بازگشت</button>
+    <div><span>PRO MANAGER</span><h2>بازار نقل‌وانتقالات</h2></div>
+    <div class="market-wallet">🪙 <b id="marketCoins">0</b></div>
+  </header>
+  <section class="market-hero">
+    <div class="market-coach-photo"><img id="marketCoachImage" src="https://raw.githubusercontent.com/mhmdzymy658-crypto/pro-football-manager/main/assets/coaches/pep.png" alt="سرمربی" onerror="this.style.display='none'"></div>
+    <div class="market-coach-dialog"><small>پیام سرمربی شما</small><h3 id="marketCoachName">مدیر نقل‌وانتقالات</h3><p id="marketCoachQuote">برای ساختن یک تیم قهرمان، باید هوشمندانه خرید کنیم!</p></div>
+  </section>
+  <div class="market-tabs">
+    <button class="active" data-market-tab="buy" onclick="switchMarketTab('buy')">🛒 خرید بازیکن</button>
+    <button data-market-tab="sell" onclick="switchMarketTab('sell')">💰 فروش بازیکن</button>
+    <button data-market-tab="coaches" onclick="switchMarketTab('coaches')">🧠 مربی‌ها</button>
+    <button data-market-tab="search" onclick="switchMarketTab('search')">🔎 جستجوی بازیکن</button>
+  </div>
+  <section class="market-summary"><div><small>بازیکنان باشگاه</small><b id="marketOwnedCount">۰</b></div><div><small>مربی‌های خریداری‌شده</small><b id="marketCoachCount">۰</b></div><div><small>بودجه باشگاه</small><b id="marketBudget">۰</b></div></section>
+  <div id="marketSearchWrap" class="market-search-wrap" hidden><input id="marketSearchInput" type="search" placeholder="نام بازیکن را فارسی یا انگلیسی بنویس..." oninput="renderMarketPlayers()"><span>⌕</span></div>
+  <div class="market-filter-row" id="marketFilterRow"><select id="marketPositionFilter" onchange="renderMarketPlayers()"><option value="">همه پست‌ها</option><option value="GK">دروازه‌بان</option><option value="DF">مدافع</option><option value="MF">هافبک</option><option value="FW">مهاجم</option></select><select id="marketSort" onchange="renderMarketPlayers()"><option value="rating">قوی‌ترین‌ها</option><option value="cheap">ارزان‌ترین‌ها</option><option value="expensive">گران‌ترین‌ها</option></select></div>
+  <div id="marketContent" class="market-content"></div>
+</div>
+
+<!-- ========== صفحه ترکیب تیم (زمین فوتبال) ========== -->
+<div id="teamPage" class="team-page">
+    <div class="team-page-header">
+        <button class="team-back-btn" onclick="closeTeamPage()" type="button">بازگشت</button>
+        <div class="team-page-title">
+            <h2>ترکیب تیم</h2>
+            <span>FORMATION</span>
+        </div>
+        <div class="team-formation-label">۴-۳-۳</div>
+    </div>
+
+    <!-- آرایش و تاکتیک -->
+    <div class="tactic-panel">
+        <div class="tp-row">
+            <span class="tp-label">آرایش</span>
+            <div class="chip-group" id="formationChips">
+                <button type="button" class="chip" data-formation="433" onclick="setFormation('433')"><bdi dir="ltr">4-3-3</bdi></button>
+                <button type="button" class="chip" data-formation="442" onclick="setFormation('442')"><bdi dir="ltr">4-4-2</bdi></button>
+                <button type="button" class="chip" data-formation="4231" onclick="setFormation('4231')"><bdi dir="ltr">4-2-3-1</bdi></button>
+            </div>
+        </div>
+        <div class="tp-row">
+            <span class="tp-label">تاکتیک</span>
+            <div class="chip-group" id="tacticChips">
+                <button type="button" class="chip" data-tactic="attack" onclick="setTactic('attack')">⚔️ هجومی</button>
+                <button type="button" class="chip" data-tactic="balanced" onclick="setTactic('balanced')">⚖️ متعادل</button>
+                <button type="button" class="chip" data-tactic="defense" onclick="setTactic('defense')">🛡️ دفاعی</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="pitch-wrapper">
+        <div class="pitch-stadium-bg"></div>
+        <div class="pitch-container">
+            <div class="pitch">
+                <!-- خطوط زمین -->
+                <div class="pitch-outline"></div>
+                <div class="pitch-halfway"></div>
+                <div class="pitch-center-circle"></div>
+                <div class="pitch-center-spot"></div>
+
+                <!-- محوطه جریمه بالا (دروازه حریف) -->
+                <div class="penalty-box top"></div>
+                <div class="goal-area top"></div>
+                <div class="penalty-spot top"></div>
+                <div class="penalty-arc top"></div>
+                <div class="goal-frame top"></div>
+
+                <!-- محوطه جریمه پایین (دروازه ما) -->
+                <div class="penalty-box bottom"></div>
+                <div class="goal-area bottom"></div>
+                <div class="penalty-spot bottom"></div>
+                <div class="penalty-arc bottom"></div>
+                <div class="goal-frame bottom"></div>
+
+                <!-- کرنرها -->
+                <div class="corner tl"></div>
+                <div class="corner tr"></div>
+                <div class="corner bl"></div>
+                <div class="corner br"></div>
+
+                <!-- جایگاه‌های بازیکن (۴-۳-۳) -->
+                <div class="pos-slot" data-slot="st" data-pos="ST" style="--x:50%; --y:12%;"></div>
+                <div class="pos-slot" data-slot="lw" data-pos="LW" style="--x:18%; --y:22%;"></div>
+                <div class="pos-slot" data-slot="rw" data-pos="RW" style="--x:82%; --y:22%;"></div>
+                <div class="pos-slot" data-slot="cam" data-pos="CAM" style="--x:50%; --y:38%;"></div>
+                <div class="pos-slot" data-slot="cm1" data-pos="CM" style="--x:28%; --y:48%;"></div>
+                <div class="pos-slot" data-slot="cm2" data-pos="CM" style="--x:72%; --y:48%;"></div>
+                <div class="pos-slot" data-slot="lb" data-pos="LB" style="--x:12%; --y:68%;"></div>
+                <div class="pos-slot" data-slot="cb1" data-pos="CB" style="--x:35%; --y:72%;"></div>
+                <div class="pos-slot" data-slot="cb2" data-pos="CB" style="--x:65%; --y:72%;"></div>
+                <div class="pos-slot" data-slot="rb" data-pos="RB" style="--x:88%; --y:68%;"></div>
+                <div class="pos-slot" data-slot="gk" data-pos="GK" style="--x:50%; --y:86%;"></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="team-page-hint">
+        روی هر جایگاه بزن تا بازیکن انتخاب کنی
+    </div>
+
+    <!-- قدرت تیم و کاپیتان -->
+    <div id="squadPanel" class="squad-panel"></div>
+
+    <!-- نیمکت ذخیره‌ها -->
+    <section id="subBench" class="sub-bench" aria-label="نیمکت ذخیره‌ها">
+        <div class="bench-heading">
+            <div>
+                <h3>نیمکت ذخیره‌ها</h3>
+                <span>SUBSTITUTES · 7 PLAYERS</span>
+            </div>
+            <b id="benchCount">۰ / ۷</b>
+        </div>
+        <div id="benchGrid" class="bench-grid"></div>
+    </section>
+</div>
+
+<nav class="bottom-nav">
+    <button class="active" onclick="closeTeamPage()">🏠<span>خانه</span></button>
+    <button onclick="openPage('shop')">🛍️<span>فروشگاه</span></button>
+    <button onclick="openPage('market')">🔄<span>بازار</span></button>
+    <button onclick="openPage('league')">⚽<span>مسابقه</span></button>
+    <button onclick="openPage('profile')">👤<span>پروفایل</span></button>
+</nav>
+
+
+
+<!-- مسابقه زنده گرافیکی -->
+<section id="matchPage" class="match-page" aria-label="مسابقه زنده">
+  <header class="match-topbar"><button type="button" onclick="closeMatchPage()">← بازگشت</button><div><small>PRO MATCH ENGINE</small><h2>مسابقه زنده</h2></div><span>🏆</span></header>
+  <div class="match-scoreboard"><div class="match-team"><span class="match-crest">🛡️</span><b id="matchHomeName">باشگاه من</b><small>میزبان</small></div><div class="match-score"><div><b id="matchHomeScore">0</b><i>:</i><b id="matchAwayScore">0</b></div><small id="matchClock">00′</small><em id="matchStatus">آماده شروع</em></div><div class="match-team"><span class="match-crest away">⚽</span><b id="matchAwayName">رئال مادرید</b><small>میهمان</small></div></div>
+  <div class="match-stadium"><div class="stadium-lights"></div><div class="match-crowd">🏟️　🏟️　🏟️　🏟️　🏟️　🏟️　🏟️</div><div class="match-pitch"><div class="mp-line"></div><div class="mp-circle"></div><div class="mp-box top"></div><div class="mp-box bottom"></div><div class="mp-goal top"></div><div class="mp-goal bottom"></div><div class="mp-players home"><i style="--x:50%;--y:13%">●</i><i style="--x:18%;--y:27%">●</i><i style="--x:38%;--y:24%">●</i><i style="--x:62%;--y:24%">●</i><i style="--x:82%;--y:27%">●</i><i style="--x:28%;--y:46%">●</i><i style="--x:50%;--y:42%">●</i><i style="--x:72%;--y:46%">●</i><i style="--x:22%;--y:70%">●</i><i style="--x:78%;--y:70%">●</i><i style="--x:50%;--y:87%">●</i></div><div class="mp-players away"><i style="--x:50%;--y:8%">●</i><i style="--x:18%;--y:20%">●</i><i style="--x:38%;--y:19%">●</i><i style="--x:62%;--y:19%">●</i><i style="--x:82%;--y:20%">●</i><i style="--x:28%;--y:35%">●</i><i style="--x:50%;--y:32%">●</i><i style="--x:72%;--y:35%">●</i><i style="--x:22%;--y:57%">●</i><i style="--x:78%;--y:57%">●</i><i style="--x:50%;--y:78%">●</i></div><div class="match-ball" id="matchBall">⚽</div></div><div class="match-stadium-caption"><span>LIVE MATCH</span><b id="matchCommentary">سوت آغاز هنوز زده نشده است.</b></div></div>
+  <div class="match-action-row"><button type="button" onclick="setMatchTactic('attack')">⚔️ هجومی</button><button type="button" class="selected" onclick="setMatchTactic('balanced')">⚖️ متعادل</button><button type="button" onclick="setMatchTactic('defense')">🛡️ دفاعی</button></div>
+  <div class="match-control-grid"><button type="button" onclick="toggleMatchSpeed()"><b>⏩ سرعت بازی</b><small id="matchSpeedLabel">عادی</small></button><button type="button" onclick="makeMatchSubstitution()"><b>🔁 تعویض</b><small id="matchSubLabel">تعویض آماده</small></button><button type="button" onclick="toggleMatchPress()"><b>🔥 پرس تیم</b><small id="matchPressLabel">پرس معمولی</small></button></div>
+  <div class="match-stats"><div><small>مالکیت توپ</small><b id="matchPossession">۵۰٪ - ۵۰٪</b><div class="match-possession"><i id="matchPossBar"></i></div></div><div><small>شوت‌ها</small><b id="matchShots">۰ - ۰</b></div><div><small>موقعیت خطرناک</small><b id="matchChances">۰ - ۰</b></div></div>
+  <div class="match-events"><div class="match-events-head"><b>گزارش مسابقه</b><small>LIVE COMMENTARY</small></div><div id="matchEventList"><p class="match-event-empty">برای شروع مسابقه آماده‌ای؟</p></div></div>
+  <button id="matchStartBtn" class="match-start-btn" type="button" onclick="startLiveMatch()">▶ شروع مسابقه</button>
+  <div id="matchResult" class="match-result" hidden></div>
+</section>
+
+<!-- شیت انتخاب بازیکن برای جایگاه -->
+<div id="playerPicker" class="player-picker" onclick="closePlayerPicker(event)">
+    <div class="picker-sheet" onclick="event.stopPropagation()">
+        <div class="picker-handle"></div>
+        <div class="picker-header">
+            <div>
+                <h3 id="pickerTitle">انتخاب بازیکن</h3>
+                <span id="pickerSub" class="picker-sub"></span>
+            </div>
+            <button type="button" class="picker-close" onclick="closePlayerPicker()">&times;</button>
+        </div>
+        <div id="pickerActions" class="picker-actions" hidden>
+            <button type="button" class="picker-remove-btn" onclick="removePlayerFromSlot()">حذف از ترکیب</button>
+        </div>
+        <div id="pickerList" class="picker-list"></div>
+    </div>
+</div>
+
+<!-- مودال جزئیات بازیکن -->
+<div id="playerModal" class="player-modal" onclick="closePlayerModal(event)">
+    <div class="modal-content" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closePlayerModal()">&times;</button>
+        <div id="modalBody"></div>
+    </div>
+</div>
+
+
+<!-- مدیریت باشگاه حرفه‌ای -->
+<div id="clubManagementPage" class="club-management-page">
+  <header class="club-management-topbar">
+    <button type="button" onclick="closeClubManagement()">← بازگشت</button>
+    <div><span>PRO FOOTBALL MANAGER</span><h2>مدیریت باشگاه</h2></div>
+    <div class="club-topball">⚽</div>
+  </header>
+  <div class="club-management-hero">
+    <div class="club-hero-copy"><span>CLUB OPERATIONS</span><h1>امپراتوری فوتبالی‌ات را بساز</h1><p>تمام بخش‌های مهم باشگاه را مدیریت کن و قدم‌به‌قدم پیشرفت بده.</p></div>
+    <div class="club-hero-icon">🏆</div>
+  </div>
+  <div class="club-management-heading"><div><span>CONTROL CENTER</span><h3>بخش‌های باشگاه</h3></div><small>۶ بخش مدیریتی</small></div>
+  <div class="club-management-grid">
+    <button class="club-feature-card" onclick="openClubFeature('training')"><div class="club-feature-image" data-fallback="تمرین فوتبال"><img src="assets/club/training-1.jpg" alt="تمرین فوتبال" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>01</span></div><div class="club-feature-copy"><b>مرکز تمرین</b><small>برنامه تمرینی و پیشرفت بازیکنان</small><i>ورود به بخش ←</i></div></button>
+    <button class="club-feature-card" onclick="openClubFeature('analysis')"><div class="club-feature-image" data-fallback="آنالیز فوتبال"><img src="assets/club/analysis-1.jpg" alt="آنالیز فوتبال" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>02</span></div><div class="club-feature-copy"><b>آنالیز قبل از بازی</b><small>بررسی حریف و آماده‌سازی تاکتیکی</small><i>ورود به بخش ←</i></div></button>
+    <button class="club-feature-card" onclick="openClubFeature('fans')"><div class="club-feature-image" data-fallback="هواداران فوتبال"><img src="assets/club/fans-1.jpg" alt="هواداران فوتبال" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>03</span></div><div class="club-feature-copy"><b>هواداران باشگاه</b><small>وفاداری، حمایت و جو ورزشگاه</small><i>ورود به بخش ←</i></div></button>
+    <button class="club-feature-card" onclick="openClubFeature('stadium')"><div class="club-feature-image" data-fallback="ورزشگاه فوتبال"><img src="assets/club/stadium-1.jpg" alt="ورزشگاه فوتبال" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>04</span></div><div class="club-feature-copy"><b>ورزشگاه</b><small>امکانات، ظرفیت و توسعه استادیوم</small><i>ورود به بخش ←</i></div></button>
+    <button class="club-feature-card" onclick="openClubFeature('academy')"><div class="club-feature-image" data-fallback="آکادمی جوانان"><img src="assets/club/academy-1.jpg" alt="آکادمی جوانان" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>05</span></div><div class="club-feature-copy"><b>آکادمی جوانان</b><small>استعداد‌یابی و پرورش نسل آینده</small><i>ورود به بخش ←</i></div></button>
+    <button class="club-feature-card" onclick="openClubFeature('medical')"><div class="club-feature-image" data-fallback="پزشکی و بدنسازی"><img src="assets/club/medical-1.jpg" alt="پزشکی و بدنسازی" loading="lazy" decoding="async" onerror="this.parentElement.classList.add('image-missing');this.remove()"><span>06</span></div><div class="club-feature-copy"><b>پزشکی و بدنسازی</b><small>سلامت، ریکاوری و آمادگی جسمانی</small><i>ورود به بخش ←</i></div></button>
+  </div>
+  <div class="club-feature-detail" id="clubFeatureDetail" hidden></div>
+</div>
+
+<!-- پروفایل کاربر -->
+<section id="userProfilePage" class="user-profile-page" aria-label="پروفایل کاربر">
+  <header class="user-profile-top"><button type="button" onclick="closeUserProfile()">← بازگشت</button><div><small>PRO FOOTBALL MANAGER</small><h2>پروفایل کاربر</h2></div><span>👤</span></header>
+  <div class="profile-card-wrap">
+    <div class="profile-avatar-picker"><label for="profileAvatarInput" class="profile-avatar" id="profileAvatarPreview"><span>＋</span></label><input id="profileAvatarInput" type="file" accept="image/*" hidden onchange="previewProfileAvatar(event)"><small>برای انتخاب عکس پروفایل از گالری بزن</small></div>
+    <form id="userProfileForm" class="user-profile-form" onsubmit="saveUserProfile(event)">
+      <label>شناسه کاربری (ID)<input id="profileUserId" type="text" minlength="3" maxlength="24" autocomplete="username" placeholder="مثلاً football2026" required></label>
+      <label>رمز ورود<input id="profilePassword" type="password" minlength="6" autocomplete="new-password" placeholder="حداقل ۶ کاراکتر" required></label>
+      <div class="profile-form-row"><label>جنسیت<select id="profileGender" required><option value="">انتخاب جنسیت</option><option value="مرد">مرد</option><option value="زن">زن</option><option value="ترجیح می‌دهم نگویم">ترجیح می‌دهم نگویم</option></select></label><label>سن<input id="profileAge" type="number" min="13" max="100" placeholder="سن" required></label></div>
+      <label>شهر<input id="profileCity" type="text" maxlength="40" placeholder="نام شهر" required></label>
+      <label class="profile-confirm"><input id="profileConfirm" type="checkbox" required><span>اطلاعات واردشده را تأیید می‌کنم.</span></label>
+      <button class="profile-save-btn" type="submit">ذخیره و ساخت پروفایل ✓</button>
+      <p class="profile-local-note">این نسخه اطلاعات را فقط روی همین دستگاه ذخیره می‌کند؛ برای ورود با همین حساب در دستگاه‌های دیگر، اتصال سامانه حساب کاربری و پایگاه داده لازم است.</p>
+    </form>
+    <div id="savedUserProfile" class="saved-user-profile" hidden></div>
+  </div>
+</section>
+
+<!-- فروشگاه VIP و آیتم‌های ظاهری پروفایل -->
+<section id="vipShopPage" class="vip-shop-page" aria-label="فروشگاه">
+  <header class="vip-shop-top"><button type="button" onclick="closeVipShop()">← بازگشت</button><div><small>PRO FOOTBALL MANAGER</small><h2>فروشگاه ویژه</h2></div><span>🛍️</span></header>
+  <div class="vip-shop-hero"><div><span>EXCLUSIVE MEMBERSHIP</span><h1>باشگاه VIP</h1><p>استایل اختصاصی خودت را بساز؛ قاب، هاله، افکت و نشان ویژه پروفایل.</p><div class="vip-wallet">🪙 <b id="vipShopCoins">۰</b> سکه</div></div><div class="vip-crown">👑</div></div>
+  <div class="vip-membership-card"><div class="vip-membership-icon">👑</div><div><b>عضویت VIP</b><small id="vipMembershipStatus">با خرید عضویت، آیتم‌های ویژه را فعال کن.</small></div><button id="vipMembershipBtn" type="button" onclick="buyVipMembership()">خرید VIP · ۲۵۰۰ سکه</button></div>
+  <div class="vip-preview-card"><div class="vip-preview-title"><b>پیش‌نمایش پروفایل</b><small>تغییرات ظاهری را اینجا ببین</small></div><div id="vipLivePreview" class="vip-live-preview"><div class="vip-preview-avatar"><span>⚽</span></div><b id="vipPreviewName">مدیر باشگاه</b><small id="vipPreviewBadge">بازیکن عادی</small></div></div>
+  <div class="vip-shop-tabs"><button class="active" data-vip-tab="frames" onclick="switchVipTab('frames')">🖼️ قاب‌ها</button><button data-vip-tab="halos" onclick="switchVipTab('halos')">✨ هاله‌ها</button><button data-vip-tab="effects" onclick="switchVipTab('effects')">🌠 افکت‌ها</button><button data-vip-tab="badges" onclick="switchVipTab('badges')">👑 نشان‌ها</button></div>
+  <div id="vipShopGrid" class="vip-shop-grid"></div>
+  <div class="vip-owned-box"><div><b>وسایل من</b><small>آیتم‌های خریداری‌شده و قابل استفاده</small></div><div id="vipOwnedItems" class="vip-owned-items">هنوز آیتمی نخریده‌ای.</div></div>
+  <p class="vip-shop-note">خریدهای این نسخه با سکه‌های داخل بازی انجام می‌شوند و فعلاً پرداخت بانکی یا خرید واقعی فعال نیست.</p>
+</section>
+
+<script src="app.js?v=8"></script>
+</body>
+</html>
